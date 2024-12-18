@@ -14,5 +14,11 @@ public class Main {
 
         System.out.println(cityDao.findByCode("NLD"));
         System.out.println(cityDao.add(newCity));
+
+        City newCity2 = cityDao.findById(25);
+        System.out.println("Population of :"+newCity2.getName() +" is :"+newCity2.getPopulation());
+        newCity2.setPopulation(23456);
+        System.out.println(cityDao.update(newCity2));
+        System.out.println(cityDao.delete(cityDao.findById(4083)));
     }
 }
