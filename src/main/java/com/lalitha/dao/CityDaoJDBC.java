@@ -2,10 +2,7 @@ package com.lalitha.dao;
 
 import com.lalitha.model.City;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +88,27 @@ public class CityDaoJDBC implements CityDao {
 
     @Override
     public List<City> findAll() {
-        return List.of();
+        String sql="select * from city";
+        List<City> cities=new ArrayList<>();
+        try(Connection connection=getConnection();
+            Statement statement=connection.createStatement();
+            ResultSet resultSet =statement.executeQuery(sql);
+        ) {
+            while(resultSet.next()){
+                int id1=resultSet.getInt("id");
+                String name=resultSet.getString("name");
+                String countryCode=resultSet.getString("countryCode");
+                String district=resultSet.getString("district");
+                int population=resultSet.getInt("population");
+                cities.add(new City(id1,name,countryCode,district,population));
+
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cities;
     }
 
     @Override
